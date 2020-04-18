@@ -36,18 +36,4 @@
 
 ### 技术选型
 
-Nodejs + Express + Mongodb / Mysql + Bootstrap
-
-## Resource
-
-### 抓取地址
-
-[豆瓣音乐](https://music.douban.com/)
-
-[网易云](https://music.163.com/)
-
-[QQ](https://y.qq.com/)
-
-[Apple Music](http://tools.applemusic.com/en-us)
-
-[Spotify](https://open.spotify.com/)
+Nodejs + Express + Mysql + Bootstrap
