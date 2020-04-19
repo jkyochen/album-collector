@@ -3,6 +3,11 @@ const request = require("supertest");
 const app = require("../app")
 
 describe("GET /api/v1", () => {
+
+  before(function () {
+      return require('../models').sequelize.sync({force: true});
+  });
+
   it("responds with a json message", (done) => {
     request(app)
       .get("/api/v1")

@@ -2,8 +2,13 @@ const request = require("supertest");
 
 const app = require("../app")
 
-describe("GET /api/v1/singers/:id", () => {
-  it("responds with a json message", (done) => {
+describe("Singer", () => {
+
+  before(function () {
+      return require('../models').sequelize.sync({force: true});
+  });
+
+  it("GET /api/v1/singers/:id", (done) => {
     request(app)
       .get("/api/v1/singers/10")
       .set("Accept", "application/json")
@@ -16,10 +21,8 @@ describe("GET /api/v1/singers/:id", () => {
         done
       );
   });
-});
 
-describe("DELETE /api/v1/singers/:id", () => {
-  it("responds with a json message", (done) => {
+  it("DELETE /api/v1/singers/:id", (done) => {
     request(app)
       .delete("/api/v1/singers/10")
       .set("Accept", "application/json")

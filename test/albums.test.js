@@ -1,9 +1,14 @@
 const request = require("supertest");
 
-const app = require("../app")
+const app = require("../app");
 
-describe("GET /api/v1/albums", () => {
-  it("responds with a json message", (done) => {
+describe("Album", () => {
+
+  before(function () {
+      return require('../models').sequelize.sync({force: true});
+  });
+
+  it("GET /api/v1/albums", (done) => {
     request(app)
       .get("/api/v1/albums")
       .set("Accept", "application/json")
@@ -16,10 +21,8 @@ describe("GET /api/v1/albums", () => {
         done
       );
   });
-});
 
-describe("GET /api/v1/albums/:id", () => {
-  it("responds with a json message", (done) => {
+  it("GET /api/v1/albums/:id", (done) => {
     request(app)
       .get("/api/v1/albums/10")
       .set("Accept", "application/json")
@@ -32,10 +35,20 @@ describe("GET /api/v1/albums/:id", () => {
         done
       );
   });
-});
 
-describe("DELETE /api/v1/albums/:id", () => {
-  it("responds with a json message", (done) => {
+  it("POST /api/v1/albums", (done) => {
+    request(app)
+      .post("/api/v1/albums")
+      .send({
+        url: "https://music.douban.com/subject/3236064/"
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .expect(/不要停止我的音乐/, done);
+  });
+
+  it("DELETE /api/v1/albums/:id", (done) => {
     request(app)
       .delete("/api/v1/albums/10")
       .set("Accept", "application/json")
