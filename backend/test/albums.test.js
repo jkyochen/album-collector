@@ -1,18 +1,15 @@
-const request = require("supertest");
+const request = require('supertest');
 
-const app = require("../app");
+const app = require('../app');
 
-describe("Album", () => {
+describe('Album', () => {
+  before(() => require('../models').sequelize.sync({ force: true }));
 
-  before(function () {
-      return require('../models').sequelize.sync({force: true});
-  });
-
-  it("GET /api/v1/albums", (done) => {
+  it('GET /api/v1/albums', (done) => {
     request(app)
-      .get("/api/v1/albums")
-      .set("Accept", "application/json")
-      .expect("Content-Type", /json/)
+      .get('/api/v1/albums')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
       .expect(
         200,
         {
@@ -22,11 +19,11 @@ describe("Album", () => {
       );
   });
 
-  it("GET /api/v1/albums/:id", (done) => {
+  it('GET /api/v1/albums/:id', (done) => {
     request(app)
-      .get("/api/v1/albums/10")
-      .set("Accept", "application/json")
-      .expect("Content-Type", /json/)
+      .get('/api/v1/albums/10')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
       .expect(
         200,
         {
@@ -36,23 +33,23 @@ describe("Album", () => {
       );
   });
 
-  it("POST /api/v1/albums", (done) => {
+  it('POST /api/v1/albums', (done) => {
     request(app)
-      .post("/api/v1/albums")
+      .post('/api/v1/albums')
       .send({
-        url: "https://music.douban.com/subject/3236064/"
+        url: 'https://music.douban.com/subject/3236064/'
       })
-      .set("Accept", "application/json")
-      .expect("Content-Type", /json/)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
       .expect(200)
       .expect(/不要停止我的音乐/, done);
   });
 
-  it("DELETE /api/v1/albums/:id", (done) => {
+  it('DELETE /api/v1/albums/:id', (done) => {
     request(app)
-      .delete("/api/v1/albums/10")
-      .set("Accept", "application/json")
-      .expect("Content-Type", /json/)
+      .delete('/api/v1/albums/10')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
       .expect(
         200,
         {

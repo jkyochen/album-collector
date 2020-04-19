@@ -1,18 +1,15 @@
-const request = require("supertest");
+const request = require('supertest');
 
-const app = require("../app")
+const app = require('../app');
 
-describe("GET /api/v1", () => {
+describe('GET /api/v1', () => {
+  before(() => require('../models').sequelize.sync({ force: true }));
 
-  before(function () {
-      return require('../models').sequelize.sync({force: true});
-  });
-
-  it("responds with a json message", (done) => {
+  it('responds with a json message', (done) => {
     request(app)
-      .get("/api/v1")
-      .set("Accept", "application/json")
-      .expect("Content-Type", /json/)
+      .get('/api/v1')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
       .expect(
         200,
         {
