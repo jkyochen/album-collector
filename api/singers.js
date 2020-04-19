@@ -1,27 +1,26 @@
 const express = require('express');
+const addAsync = require('@awaitjs/express').addAsync;
 const models = require('../models');
 
-const router = express.Router();
+const router = addAsync(express.Router());
 
-router.get('/:id', (req, res) => {
-  models.Singer.findByPk(req.params.id, {
+router.getAsync('/:id', async (req, res, next) => {
+  let singer = await models.Singer.findByPk(req.params.id, {
     include: [models.Album],
-  }).then((singer) => {
-    res.json({
-      singer,
-    });
+  })
+  res.json({
+    singer,
   });
 });
 
-router.delete('/:id', (req, res) => {
-  models.Singer.destroy({
+router.deleteAsync('/:id', async (req, res, next) => {
+  let singer = await models.Singer.destroy({
     where: {
       id: req.params.id,
     },
-  }).then((singer) => {
-    res.json({
-      singer,
-    });
+  })
+  res.json({
+    singer,
   });
 });
 

@@ -1,29 +1,28 @@
 const express = require('express');
+const addAsync = require('@awaitjs/express').addAsync;
 const models = require('../models');
 
-const router = express.Router();
+const router = addAsync(express.Router());
 
-router.get('/', (req, res) => {
-  models.Album.findAll({
+router.getAsync('/', async (req, res, next) => {
+  let albums = await models.Album.findAll({
     include: [models.Song],
-  }).then((albums) => {
-    res.json({
-      albums,
-    });
+  });
+  res.json({
+    albums,
   });
 });
 
-router.get('/:id', (req, res) => {
-  models.Album.findByPk(req.params.id, {
+router.getAsync('/:id', async (req, res, next) => {
+  let album = await models.Album.findByPk(req.params.id, {
     include: [models.Song],
-  }).then((album) => {
-    res.json({
-      album,
-    });
+  });
+  res.json({
+    album,
   });
 });
 
-router.post('/create', function(req, res) {
+router.postAsync('/create', async (req, res, next) => {
   req.body.crawl_url
 
   models.Album.create({
@@ -33,25 +32,23 @@ router.post('/create', function(req, res) {
   });
 });
 
-router.post('/', (req, res) => {
-  models.Album.findAll({
+router.postAsync('/', async (req, res, next) => {
+  let albums = await models.Album.findAll({
     include: [models.Song],
-  }).then((albums) => {
-    res.json({
-      albums,
-    });
+  });
+  res.json({
+    albums,
   });
 });
 
-router.delete('/:id', (req, res) => {
-  models.Album.destroy({
+router.deleteAsync('/:id', async (req, res, next) => {
+  let album = await models.Album.destroy({
     where: {
       id: req.params.id,
     },
-  }).then((album) => {
-    res.json({
-      album,
-    });
+  })
+  res.json({
+    album,
   });
 });
 

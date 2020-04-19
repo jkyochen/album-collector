@@ -1,18 +1,18 @@
 const express = require('express');
+const addAsync = require('@awaitjs/express').addAsync;
 const models = require('../models');
 
-const router = express.Router();
+const router = addAsync(express.Router());
 
 const albumsRouter = require('./albums');
 const singersRouter = require('./singers');
 
-router.get('/', (req, res) => {
-  models.Singer.findAll({
+router.getAsync('/', async (req, res, next) => {
+  let singers = await models.Singer.findAll({
     include: [models.Album],
-  }).then((singers) => {
-    res.json({
-      singers,
-    });
+  })
+  res.json({
+    singers,
   });
 });
 
